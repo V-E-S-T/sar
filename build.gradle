@@ -34,5 +34,8 @@ dependencies {
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
     compile('org.postgresql:postgresql')
     compile('org.projectlombok:lombok')
+	implementation 'org.apache.poi:poi:5.2.3'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+	implementation 'org.jsoup:jsoup:1.16.1'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
