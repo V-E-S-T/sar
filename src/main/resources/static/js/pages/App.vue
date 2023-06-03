@@ -11,6 +11,13 @@
       <v-spacer></v-spacer>
       <v-btn flat
              v-if="profile"
+             :disabled="$route.path === '/products'"
+             @click="showProducts">
+        Products
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn flat
+             v-if="profile"
              :disabled="$route.path === '/profile'"
              @click="showProfile">
         {{profile.name}}
@@ -34,15 +41,18 @@
 
 <script>
 import MessagesList from 'components/messages/MessageList.vue'
+import ProductTable from 'products/ProductTable.vue'
 
 export default {
   components: {
-    MessagesList
+    MessagesList,
+    ProductTable
   },
   data() {
     return {
       messages: frontendData.messages,
-      profile: frontendData.profile
+      profile: frontendData.profile,
+      products: frontendData.products
     }
   },
   methods: {
@@ -51,6 +61,9 @@ export default {
     },
     showProfile() {
       this.$router.push('/profile')
+    },
+    showProducts() {
+      this.$router.push('/products')
     }
   },
   beforeMount() {

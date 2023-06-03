@@ -2,6 +2,7 @@ package letscode.sarafan.controller;
 
 import letscode.sarafan.domain.User;
 import letscode.sarafan.repo.MessageRepo;
+import letscode.sarafan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,13 +17,15 @@ import java.util.HashMap;
 @RequestMapping("/")
 public class MainController {
     private final MessageRepo messageRepo;
+    private ProductService productService;
 
     @Value("${spring.profiles.active}")
     private String profile;
 
     @Autowired
-    public MainController(MessageRepo messageRepo) {
+    public MainController(MessageRepo messageRepo, ProductService productService) {
         this.messageRepo = messageRepo;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -32,6 +35,7 @@ public class MainController {
         if (user != null) {
             data.put("profile", user);
             data.put("messages", messageRepo.findAll());
+            data.put("products", productService.getAllProduct());
         }
 
         model.addAttribute("frontendData", data);
