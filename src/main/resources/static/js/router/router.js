@@ -4,6 +4,7 @@ import MessagesList from 'components/messages/MessageList.vue'
 import Auth from 'pages/Auth.vue'
 import Profile from 'pages/Profile.vue'
 import ProductTable from 'products/ProductTable.vue'
+import ReviewsList from 'reviews/ReviewsList.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,7 @@ const routes = [
     { path: '/', component: MessagesList },
     { path: '/auth', component: Auth },
     { path: '/profile', component: Profile },
+    { path: '/reviews/:asin', component: ReviewsList },
     { path: '/products', component: ProductTable },
     { path: '*', component: MessagesList },
 

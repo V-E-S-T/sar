@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-title>Sarafan</v-toolbar-title>
+      <v-toolbar-title>Amazon Review Parser</v-toolbar-title>
       <v-btn flat
              v-if="profile"
              :disabled="$route.path === '/'"
              @click="showMessages">
-        Messages
+        Products
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn flat
              v-if="profile"
              :disabled="$route.path === '/products'"
              @click="showProducts">
-        Products
+        Reviews
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn flat
