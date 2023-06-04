@@ -11,8 +11,8 @@
       <v-spacer></v-spacer>
       <v-btn flat
              v-if="profile"
-             :disabled="$route.path === '/products'"
-             @click="showProducts">
+             :disabled="$route.path === '/reviews'"
+             @click="showReviews">
         Reviews
       </v-btn>
       <v-spacer></v-spacer>
@@ -62,8 +62,8 @@ export default {
     showProfile() {
       this.$router.push('/profile')
     },
-    showProducts() {
-      this.$router.push('/products')
+    showReviews() {
+      this.$router.push('/reviews')
     }
   },
   beforeMount() {
