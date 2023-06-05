@@ -45,8 +45,13 @@ function getIndex(list, id) {
                 })
           },
           reviews: function () {
-            // /reviews?asin='product_asin'
-            this.$router.push({ path: '/reviews', params: { asin: this.product.asin}})
+            // this.$resource('/reviews').get()
+            //     .then(result =>
+            //         result.json().then(data => {
+            //           reviewsData.push(data)
+            //         }))
+            // this.$router.push({ path: '/reviews'})
+            this.$router.push({ path: `/reviews/${this.product.asin}`})
           }
             // edit() {
             //     this.editMessage(this.message)

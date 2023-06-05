@@ -44,20 +44,8 @@ public class ReviewService {
 
         Elements reviews = doc.select("div[data-hook=review]");
 
-        return reviews.stream().map(element -> {
-            return extractReviewFromElement(element);
-        }).collect(Collectors.toList());
+        return reviews.stream().map(this::extractReviewFromElement).collect(Collectors.toList());
 
-//        Optional.ofNullable(doc.select("div[class=reviews-sort-order-options] select option").stream()
-//                .filter(optionElement -> optionElement.text().equals("Most recent"))
-//                .findFirst().get().)
-//
-////                    .ifPresentOrElse(
-//                element ->element.sel product.setAsin(element.attr("data-asin")), ()-> product.setAsin("")
-//        );
-
-
-//        return Collections.emptyList();
     }
 
     private Review extractReviewFromElement(Element reviewElement){

@@ -42,11 +42,13 @@
 <script>
 import MessagesList from 'components/messages/MessageList.vue'
 import ProductTable from 'products/ProductTable.vue'
+import ReviewsList from "../reviews/ReviewsList.vue";
 
 export default {
   components: {
     MessagesList,
-    ProductTable
+    ProductTable,
+    ReviewsList
   },
   data() {
     return {

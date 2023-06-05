@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import MessageRow from 'components/messages/MessageRow.vue'
-import MessageForm from 'components/messages/MessageForm.vue'
+// import MessageRow from 'components/messages/MessageRow.vue'
+// import MessageForm from 'components/messages/MessageForm.vue'
 import ReviewRow from "./ReviewRow.vue";
 
 export default {
@@ -23,8 +23,23 @@ export default {
   data() {
     return {
       review: null,
-      reviews: frontendData.reviews,
+      // reviews: [[${reviewsData}]],
+      // reviews: reviewsData,
+      reviews: null,
       profile: frontendData.profile
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData(){
+      this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin })
+          .then(result =>
+              result.json().then(data => {
+                this.$data.reviews = data
+              }))
+
     }
   }
   // computed: {

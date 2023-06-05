@@ -1,14 +1,21 @@
 package letscode.sarafan.controller;
 
+import letscode.sarafan.domain.Review;
 import letscode.sarafan.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-@RequestMapping("reviews")
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -22,9 +29,29 @@ public class ReviewController {
 //        return reviewService.getAllReviewsByAsin(asin);
 //    }
 
+
+//    @GetMapping("{asin}")
 //    @GetMapping
-//    public String main(Model model){
+//    public ModelAndView  parseProductReviews(){
+//        List <Review> reviewsList = reviewService.getAllReviewsByAsin("asin");
+//        ModelAndView mv = new ModelAndView();
+//        mv.addObject("reviewsData", reviewsList);
+//        mv.setViewName("index");
+//        return mv;
+
+//        model.addAttribute("reviewsData", reviewsList);
+//        reviewService.getAllReviewsByAsin(asin);
 //        model.addAttribute("frontendData", reviewService.getAllReviewsByAsin("B0988X73FW"));
-//        return "review";
+
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("reviewsData", reviewsList);
+//        return new ModelAndView("index.html", model);
 //    }
+
+    @GetMapping("{asin}")
+    public List <Review>  parseProductReviews(@PathVariable("asin")String asin){
+        List <Review> reviewsList = reviewService.getAllReviewsByAsin(asin);
+        //model.addAttribute("reviewsData", reviewsList);
+        return reviewsList;
+    }
 }

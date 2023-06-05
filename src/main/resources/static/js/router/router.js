@@ -12,8 +12,9 @@ const routes = [
     { path: '/', component: MessagesList },
     { path: '/auth', component: Auth },
     { path: '/profile', component: Profile },
-    { path: '/reviews', component: ReviewsList },
-    // { path: '/reviews/:asin', component: ReviewsList },
+    // { path: '/reviews', component: ReviewsList },
+    { path: '/reviews/:asin', component: ReviewsList },
+    // { path: '/reviews', component: ReviewsList },
     { path: '/products', component: ProductTable },
     { path: '*', component: MessagesList },
 

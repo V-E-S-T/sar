@@ -39,7 +39,7 @@ public class MainController {
             data.put("profile", user);
             data.put("messages", messageRepo.findAll());
             data.put("products", productService.getAllProduct());
-            data.put("reviews", reviewService.getAllReviewsByAsin("some_asin"));
+//            data.put("reviews", reviewService.getAllReviewsByAsin("some_asin"));
         }
 
         model.addAttribute("frontendData", data);
