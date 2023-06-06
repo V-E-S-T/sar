@@ -30,8 +30,11 @@ public class ReviewService {
         this.reviewRepo = reviewRepo;
         this.productRepo = productRepo;
     }
-    public Review save(Review review) {
-        return reviewRepo.save(review);
+    public List<Review> saveAll(List<Review> reviewList) {
+        List <Review> filteredReviewList = reviewList.stream()
+                .filter(review -> !reviewRepo.existsByAmazonReviewId(review.getAmazonReviewId()))
+                .collect(Collectors.toList());
+        return reviewRepo.saveAll(filteredReviewList);
     }
     public List<Review> parseReviewsFromPage(String pageReference){
         Document doc = ParserUtil.getHTMLDocument(pageReference);

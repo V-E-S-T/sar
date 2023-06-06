@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"amazonReviewId"}))
 @ToString(of = {"id", "productAsin", "sentiment", "rating"})
 @EqualsAndHashCode(of = {"id", "productAsin"})
 public class Review {
