@@ -39,7 +39,9 @@ export default {
               result.json().then(data => {
                 this.$data.reviews = data
               }))
-
+      if (this.$data.reviews.size === 0){
+        alert('There is no any product reviews for this ASIN');
+      }
     }
   }
   // computed: {

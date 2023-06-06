@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -42,9 +43,9 @@ public class ReviewService {
 
 //        doc.select("div#reviews-sort-order-options > select option[value=recent]");
 
-        Elements reviews = doc.select("div[data-hook=review]");
+        Elements reviewsElements = doc.select("div[data-hook=review]");
 
-        return reviews.stream().map(this::extractReviewFromElement).collect(Collectors.toList());
+        return reviewsElements.stream().map(this::extractReviewFromElement).collect(Collectors.toList());
 
     }
 
@@ -96,7 +97,26 @@ public class ReviewService {
         return "neutral";
     }
 
+    private String extractProductReviewsPageReference(String asin){
+        return productRepo.findByAsin(asin).getReference()
+                .replaceFirst("/dp/", "/product-reviews/")
+                + "&reviewerType=all_reviews&pageNumber=";
+
+    }
+
     public List<Review> getAllReviewsByAsin(String asin) {
-        return parseReviewsFromPage("https://www.amazon.com/TICARVE-Cleaning-Detailing-Interior-Assecories/product-reviews/B0988X73FW/ref=cm_cr_arp_d_viewopt_srt?ie=UTF8&reviewerType=all_reviews&sortBy=recent&pageNumber=1");
+        int counter = 1;
+        List<Review> filteredReviews;
+        List<Review> allFilteredReviews = new ArrayList<>();
+        String productReviewsPageReference = extractProductReviewsPageReference(asin);
+        LocalDate monthAgoLocalDate = LocalDate.now().minusMonths(1L);
+        do{
+            filteredReviews = parseReviewsFromPage(productReviewsPageReference + counter).stream()
+                    .filter(review -> review.getReviewDate().isAfter(monthAgoLocalDate))
+                    .collect(Collectors.toList());
+            allFilteredReviews.addAll(filteredReviews);
+            counter++;
+        }while(filteredReviews.size() > 0);
+        return allFilteredReviews;
     }
 }
