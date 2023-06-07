@@ -2,7 +2,7 @@
   <v-data-table
       :headers="productHeaders"
       :items="products"
-      :sort-by="[{ key: 'id', order: 'asc' }]"
+      :sort-by="[{ key: 'product_id', order: 'asc' }]"
       class="elevation-1"
   >
     <template v-slot:top>
@@ -160,12 +160,12 @@ export default {
     dialogDelete: false,
     productHeaders: [
       {
-        title: 'id',
+        title: 'product_id',
         align: 'start',
         sortable: false,
         key: 'asin',
       },
-      { title: 'id', value: 'asin' },
+      { title: 'product_id', value: 'asin' },
       { title: 'reference', value: 'reference' },
       { title: 'price', value: 'price' },
       { title: 'description', value: 'description' },

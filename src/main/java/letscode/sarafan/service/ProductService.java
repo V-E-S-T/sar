@@ -5,7 +5,6 @@ import letscode.sarafan.domain.Product;
 import letscode.sarafan.repo.ProductRepo;
 import letscode.sarafan.repo.ReviewRepo;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +32,10 @@ public class ProductService {
     }
 
     public boolean deleteByAsin(String asin) {
-        Integer p = productRepo.deleteProductByAsin(asin);
-        Integer r = reviewRepo.deleteReviewsByProductAsin(asin);
-        return p > r;
+//        Integer p = productRepo.deleteProductByAsin(asin);
+//        Integer r = reviewRepo.deleteReviewsByProductAsin(asin);
+        Integer i = productRepo.deleteProductByAsin(asin);
+        return i > 0;
     }
 
     private String searchReferenceByAsin(String asin) {
@@ -83,10 +83,10 @@ public class ProductService {
         return product;
     }
 
-    public Product updateProduct(String id) {
-        Product product = getProductById(id);
+    public Product updateProduct(String product_id) {
+        Product product = getProductById(product_id);
         Product updatedProduct = parseProductByASIN(product.getAsin());
-        BeanUtils.copyProperties(updatedProduct, product, "id");
+        BeanUtils.copyProperties(updatedProduct, product, "product_id", "reviews");
         return save(product);
     }
 
@@ -94,9 +94,9 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public Product getProductById(String id) {
+    public Product getProductById(String product_id) {
         return getAllProduct().stream()
-                .filter(product -> product.getId().equals(Long.valueOf(id)))
+                .filter(product -> product.getProduct_id().equals(Long.valueOf(product_id)))
                 .findFirst().get();
     }
 

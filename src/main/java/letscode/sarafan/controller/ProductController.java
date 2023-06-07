@@ -20,8 +20,8 @@ public class ProductController {
         return productService.getAllProduct();
     }
 
-    @GetMapping("{id}")
-    public Product getProduct(@PathVariable("id") Product product){
+    @GetMapping("{product_id}")
+    public Product getProduct(@PathVariable("product_id") Product product){
         return product;
     }
 
@@ -33,9 +33,9 @@ public class ProductController {
         }
         return productService.save(newProduct);
     }
-    @PutMapping("{id}")
-    public Product update(@PathVariable String id){
-        return productService.updateProduct(id);
+    @PutMapping("{product_id}")
+    public Product update(@PathVariable String product_id){
+        return productService.updateProduct(product_id);
     }
 
     @DeleteMapping("{asin}")

@@ -29,10 +29,10 @@ function getIndex(list, id) {
         props: ['product', 'products'],
         methods: {
           update: function () {
-            this.$resource('/products{/id}').update({id: this.product.id}, {})
+            this.$resource('/products{/product_id}').update({product_id: this.product.product_id}, {})
                 .then(result =>
                     result.json().then(data => {
-                      var index = getIndex(this.products, data.id)
+                      var index = getIndex(this.products, data.product_id)
                       this.products.splice(index, 1, data);
                     }))
           },

@@ -4,15 +4,18 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"asin"}))
-@ToString(of = {"id", "asin", "title"})
-@EqualsAndHashCode(of = {"id", "asin"})
+@ToString(of = {"product_id", "asin", "title"})
+@EqualsAndHashCode(of = {"product_id", "asin"})
 public class Product {
     @Id
+    @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long product_id;
     private String asin;
     private String reference;
     private String price;
@@ -24,10 +27,20 @@ public class Product {
     private String title;
     private String rating;
     private String ratingCount;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> reviews = new HashSet<>();
 
     //TODO implement 'totalRatings' and 'totalReviews' parsing
     private Integer totalRatings;
     private Integer totalReviews;
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Integer getTotalRatings() {
         return totalRatings;
@@ -61,22 +74,22 @@ public class Product {
         this.ratingCount = productRatingCount;
     }
 
-    public Product(String asin, String reference, Long id) {
+    public Product(String asin, String reference, Long product_id) {
         this.asin = asin;
         this.reference = reference;
-        this.id = id;
+        this.product_id = product_id;
     }
 
     public Product() {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getProduct_id() {
+        return product_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProduct_id(Long id) {
+        this.product_id = id;
     }
 
     public String getAsin() {

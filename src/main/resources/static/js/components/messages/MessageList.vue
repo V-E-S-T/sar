@@ -3,7 +3,7 @@
     <v-layout align-space-around justify-start column>
       <message-form :products="products"/>
       <message-row v-for="product in sortedProducts"
-                   :key="product.id"
+                   :key="product.product_id"
                    :product="product"
                    :products="products"
                    :update="update"/>

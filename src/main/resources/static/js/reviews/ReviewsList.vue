@@ -5,7 +5,7 @@
       <v-flex grow pa-1 lg10 md10 xs8>
         <v-layout align-space-around justify-start column>
           <review-row v-for="review in reviews"
-                      :key="review.id"
+                      :key="review.review_id"
                       :review="review"
                       :reviews="reviews"/>
         </v-layout>

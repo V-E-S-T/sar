@@ -54,6 +54,7 @@ public class ReviewService {
 
     private Review extractReviewFromElement(Element reviewElement){
         Review review = new Review();
+        String productAsin;
         review.setAmazonReviewId(reviewElement.id());
         Optional.ofNullable(reviewElement.selectFirst("span[data-hook='review-date']")).ifPresent(
                 element -> {
@@ -63,9 +64,11 @@ public class ReviewService {
         review.setReviewTitle(Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title'] span"))
                 .map(element -> element.text())
                 .orElse(""));
-        review.setProductAsin(Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title']"))
+        productAsin = Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title']"))
                 .map(element -> element.attr("href").split("(.*)ASIN=")[1])
-                .orElse(""));
+                .orElse("");
+        review.setProductAsin(productAsin);
+        review.setProduct(productRepo.findByAsin(productAsin));
         Optional.ofNullable(reviewElement.selectFirst("div[class='a-row'] a[class='a-link-normal']")).ifPresent(
                 element ->{
                     review.setRating(Integer.parseInt(element.attr("title").split("\\.")[0]));

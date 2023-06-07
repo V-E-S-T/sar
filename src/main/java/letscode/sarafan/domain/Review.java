@@ -7,12 +7,13 @@ import java.time.LocalDate;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"amazonReviewId"}))
-@ToString(of = {"id", "productAsin", "sentiment", "rating"})
-@EqualsAndHashCode(of = {"id", "productAsin"})
+@ToString(of = {"review_id", "productAsin", "sentiment", "rating"})
+@EqualsAndHashCode(of = {"review_id", "productAsin"})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "review_id")
+    private Long review_id;
     private String productAsin;
     private String sentiment;
     @Column(name = "review", columnDefinition = "text")
@@ -23,6 +24,17 @@ public class Review {
     private String reviewCountry;
     private LocalDate reviewDate;
     private String reviewTitle;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public String getReviewTitle() {
         return reviewTitle;
@@ -67,12 +79,12 @@ public class Review {
         this.totalRatingsAndReviews = totalRatingsAndReviews;
     }
 
-    public Long getId() {
-        return id;
+    public Long getReview_id() {
+        return review_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setReview_id(Long id) {
+        this.review_id = id;
     }
 
     public String getProductAsin() {
