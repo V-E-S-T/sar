@@ -37,11 +37,15 @@ function getIndex(list, id) {
                     }))
           },
           del: function () {
-            this.$resource('/products{/id}').remove({id: this.product.id})
+            this.$resource('/products{/asin}').remove({asin: this.product.asin})
                 .then(result => {
-                  if (result.ok) {
+                  if (result) {
                     this.products.splice(this.products.indexOf(this.product), 1)
                   }
+                })
+                .catch((error) => {
+                  alert('Something went wrong.')
+                  console.log('Something went wrong.', error)
                 })
           },
           reviews: function () {

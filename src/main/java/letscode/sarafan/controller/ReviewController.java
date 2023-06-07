@@ -1,16 +1,11 @@
 package letscode.sarafan.controller;
 
-import letscode.sarafan.domain.Product;
 import letscode.sarafan.domain.Review;
 import letscode.sarafan.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/reviews")
@@ -53,8 +48,12 @@ public class ReviewController {
 
     @GetMapping("{asin}")
     public List <Review>  parseProductReviews(@PathVariable("asin")String asin){
-        List <Review> reviewsList = reviewService.getAllReviewsByAsin(asin);
+        List <Review> reviewsList = reviewService.parseReviewsByAsin(asin);
         //model.addAttribute("reviewsData", reviewsList);
         return reviewsList;
+    }
+    @GetMapping("/getSavedReviews/{asin}")
+    public List <Review>  getSavedReviews(@PathVariable("asin")String asin){
+        return reviewService.getSavedReviewsByAsin(asin);
     }
 }

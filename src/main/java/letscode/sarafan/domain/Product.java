@@ -6,7 +6,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"asin"}))
 @ToString(of = {"id", "asin", "title"})
 @EqualsAndHashCode(of = {"id", "asin"})
 public class Product {

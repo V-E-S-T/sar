@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 public interface ProductRepo extends JpaRepository<Product, Long> {
     Product findByAsin(String asin);
+
     @Transactional
-    void deleteProductById(Long id);
+    Integer deleteProductByAsin(String asin);
 }

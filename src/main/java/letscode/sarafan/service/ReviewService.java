@@ -107,7 +107,7 @@ public class ReviewService {
 
     }
 
-    public List<Review> getAllReviewsByAsin(String asin) {
+    public List<Review> parseReviewsByAsin(String asin) {
         int counter = 1;
         List<Review> filteredReviews;
         List<Review> allFilteredReviews = new ArrayList<>();
@@ -121,5 +121,9 @@ public class ReviewService {
             counter++;
         }while(filteredReviews.size() > 0);
         return allFilteredReviews;
+    }
+
+    public List<Review> getSavedReviewsByAsin(String asin){
+        return reviewRepo.findAllByProductAsin(asin);
     }
 }

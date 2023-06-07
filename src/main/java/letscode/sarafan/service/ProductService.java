@@ -3,6 +3,7 @@ package letscode.sarafan.service;
 import letscode.sarafan.Util.ParserUtil;
 import letscode.sarafan.domain.Product;
 import letscode.sarafan.repo.ProductRepo;
+import letscode.sarafan.repo.ReviewRepo;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.BeanUtils;
@@ -15,10 +16,12 @@ import java.util.Optional;
 @Service
 public class ProductService {
     private final ProductRepo productRepo;
+    private final ReviewRepo reviewRepo;
 
     @Autowired
-    public ProductService(ProductRepo productRepo) {
+    public ProductService(ReviewRepo reviewRepo, ProductRepo productRepo) {
         this.productRepo = productRepo;
+        this.reviewRepo = reviewRepo;
     }
 
     public Product save(Product product) {
@@ -29,8 +32,10 @@ public class ProductService {
         return productRepo.findByAsin(asin);
     }
 
-    public void delete(Long id) {
-        productRepo.deleteProductById(id);
+    public boolean deleteByAsin(String asin) {
+        Integer p = productRepo.deleteProductByAsin(asin);
+        Integer r = reviewRepo.deleteReviewsByProductAsin(asin);
+        return p > r;
     }
 
     private String searchReferenceByAsin(String asin) {

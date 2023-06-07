@@ -26,15 +26,6 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <!--      <v-flex d-flex class="parse-reviews-container">-->
-      <!--        <v-btn @click="parseReviews">-->
-      <!--          Parse Reviews-->
-      <!--        </v-btn>-->
-      <!--        <v-spacer></v-spacer>-->
-      <!--        <v-btn @click="parseReviews">-->
-      <!--          Parse Reviews-->
-      <!--        </v-btn>-->
-      <!--      </v-flex>-->
     </v-layout>
   </v-container>
 </template>
@@ -59,7 +50,7 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getData()
   },
   // computed: {
   //   cols () {
@@ -68,7 +59,24 @@ export default {
   //   },
   // },
   methods: {
-    fetchData() {
+    getData(){
+      this.$resource('/reviews/getSavedReviews{/asin}').get({asin: this.$route.params.asin})
+          .then(result =>
+              result.json().then(data => {
+                this.$data.reviews = data
+              }))
+    },
+    // fetchData() {
+    //   this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin})
+    //       .then(result =>
+    //           result.json().then(data => {
+    //             this.$data.reviews = data
+    //           }))
+    //   if (this.$data.reviews.size === 0) {
+    //     alert('There is no any product reviews for this ASIN')
+    //   }
+    // },
+    parseReviews() {
       this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin})
           .then(result =>
               result.json().then(data => {
@@ -77,9 +85,6 @@ export default {
       if (this.$data.reviews.size === 0) {
         alert('There is no any product reviews for this ASIN')
       }
-    },
-    parseReviews() {
-      this.fetchData()
     },
     saveReviews() {
       // const existingProduct = this.products.find(

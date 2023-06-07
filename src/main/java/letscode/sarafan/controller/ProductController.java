@@ -38,8 +38,8 @@ public class ProductController {
         return productService.updateProduct(id);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
-        productService.delete(id);
+    @DeleteMapping("{asin}")
+    public boolean delete(@PathVariable String asin){
+        return productService.deleteByAsin(asin);
     }
 }
