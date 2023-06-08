@@ -3,6 +3,9 @@ package letscode.sarafan.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -27,6 +30,7 @@ public class Review {
     private String reviewTitle;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Product product;
 

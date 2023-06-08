@@ -46,7 +46,7 @@ public class ReviewController {
         return reviewService.saveAll(reviewList);
     }
 
-    @GetMapping("{asin}")
+    @GetMapping("/parseReviews/{asin}")
     public List <Review>  parseProductReviews(@PathVariable("asin")String asin){
         List <Review> reviewsList = reviewService.parseReviewsByAsin(asin);
         //model.addAttribute("reviewsData", reviewsList);

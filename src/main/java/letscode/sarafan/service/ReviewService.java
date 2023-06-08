@@ -1,6 +1,7 @@
 package letscode.sarafan.service;
 
 import letscode.sarafan.Util.ParserUtil;
+import letscode.sarafan.domain.Product;
 import letscode.sarafan.domain.Review;
 import letscode.sarafan.repo.ProductRepo;
 import letscode.sarafan.repo.ReviewRepo;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,8 +29,13 @@ public class ReviewService {
         this.productRepo = productRepo;
     }
     public List<Review> saveAll(List<Review> reviewList) {
+        if (reviewList.size()==0){
+            return Collections.emptyList();
+        }
+        Product product = productRepo.findByAsin(reviewList.get(0).getProductAsin());
         List <Review> filteredReviewList = reviewList.stream()
                 .filter(review -> !reviewRepo.existsByAmazonReviewId(review.getAmazonReviewId()))
+                .peek(review -> review.setProduct(product))
                 .collect(Collectors.toList());
         return reviewRepo.saveAll(filteredReviewList);
     }
@@ -54,7 +57,7 @@ public class ReviewService {
 
     private Review extractReviewFromElement(Element reviewElement){
         Review review = new Review();
-        String productAsin;
+//        String productAsin;
         review.setAmazonReviewId(reviewElement.id());
         Optional.ofNullable(reviewElement.selectFirst("span[data-hook='review-date']")).ifPresent(
                 element -> {
@@ -64,11 +67,13 @@ public class ReviewService {
         review.setReviewTitle(Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title'] span"))
                 .map(element -> element.text())
                 .orElse(""));
-        productAsin = Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title']"))
+//        productAsin = Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title']"))
+//                .map(element -> element.attr("href").split("(.*)ASIN=")[1])
+//                .orElse("");
+        review.setProductAsin(Optional.ofNullable(reviewElement.selectFirst("a[data-hook='review-title']"))
                 .map(element -> element.attr("href").split("(.*)ASIN=")[1])
-                .orElse("");
-        review.setProductAsin(productAsin);
-        review.setProduct(productRepo.findByAsin(productAsin));
+                .orElse(""));
+//        review.setProduct(productRepo.findByAsin(productAsin));
         Optional.ofNullable(reviewElement.selectFirst("div[class='a-row'] a[class='a-link-normal']")).ifPresent(
                 element ->{
                     review.setRating(Integer.parseInt(element.attr("title").split("\\.")[0]));
