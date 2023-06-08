@@ -26,17 +26,16 @@
 </template>
 
 <script>
-import MessagesList from '../components/messages/MessageList.vue'
+import ProductList from '../components/products/ProductList.vue'
 import ReviewsList from "../reviews/ReviewsList.vue";
 
 export default {
   components: {
-    MessagesList,
+    ProductList,
     ReviewsList
   },
   data() {
     return {
-      messages: frontendData.messages,
       profile: frontendData.profile,
       products: frontendData.products
     }

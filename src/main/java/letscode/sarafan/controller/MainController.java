@@ -37,7 +37,7 @@ public class MainController {
 
         if (user != null) {
             data.put("profile", user);
-            data.put("messages", messageRepo.findAll());
+//            data.put("messages", messageRepo.findAll());
             data.put("products", productService.getAllProduct());
 //            data.put("reviews", reviewService.getAllReviewsByAsin("some_asin"));
         }

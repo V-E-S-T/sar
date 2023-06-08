@@ -49,20 +49,8 @@ function getIndex(list, id) {
                 })
           },
           reviews: function () {
-            // this.$resource('/reviews').get()
-            //     .then(result =>
-            //         result.json().then(data => {
-            //           reviewsData.push(data)
-            //         }))
-            // this.$router.push({ path: '/reviews'})
             this.$router.push({ path: `/reviews/${this.product.asin}`})
           }
-            // edit() {
-            //     this.editMessage(this.message)
-            // },
-            // del() {
-            //     this.deleteMessage(this.message)
-            // }
         }
     }
 </script>
