@@ -1,6 +1,46 @@
 <template>
   <v-container fluid v-if="profile">
 
+    <v-layout align-space-around >
+      <v-card :product="product" class="mx-auto my-12" max-width="800">
+
+        <v-card-title>
+          <div>
+            <p>Product with ASIN:  {{product.asin}}</p>
+          </div>
+        </v-card-title>
+        <v-divider class="mx-4 mb-1"></v-divider>
+        <v-card-title>
+          <div>
+            <p>Product title:  {{product.title}}</p>
+          </div>
+        </v-card-title>
+        <v-divider class="mx-4 mb-1"></v-divider>
+
+        <v-card-text>
+          <div class="text-xs-center">
+            <v-rating
+                :model-value="product.rating"
+                color="amber"
+                density="compact"
+                half-increments
+                readonly
+                size="small"
+            ></v-rating>
+            <div class="text-grey ms-4">{{product.rating}}</div>
+          </div>
+
+<!--          <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>-->
+
+<!--          <div>-->
+<!--            {{product.description}}-->
+<!--          </div>-->
+        </v-card-text>
+
+        <v-divider class="mx-4 mb-1"></v-divider>
+
+      </v-card>
+    </v-layout>
     <v-layout row>
       <v-flex grow pa-1 lg10 md10 xs8>
 <!--        <v-layout align-space-around justify-start column>-->
@@ -49,7 +89,8 @@ export default {
       // reviews: [[${reviewsData}]],
       // reviews: reviewsData,
       reviews: [],
-      profile: frontendData.profile
+      profile: frontendData.profile,
+      product: ""
     }
   },
   created() {
@@ -68,6 +109,11 @@ export default {
               result.json().then(data => {
                 this.$data.reviews = data
               }))
+      this.$resource('/products/getProductByAsin{/asin}').get({asin: this.$route.params.asin})
+          .then(result =>
+              result.json().then(data => {
+                this.$data.product = data
+              }))
     },
     // fetchData() {
     //   this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin})
@@ -80,7 +126,7 @@ export default {
     //   }
     // },
     parseReviews() {
-      this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin})
+      this.$resource('/reviews/parseReviews{/asin}').get({asin: this.$route.params.asin})
           .then(result =>
               result.json().then(data => {
                 this.$data.reviews = data
@@ -93,7 +139,7 @@ export default {
       // const existingProduct = this.products.find(
       //     product => product.asin === this.asin);
 
-      if (this.reviews === 0) {
+      if (this.reviews.length === 0) {
         alert('There is no any Reviews to save.')
       } else {
         this.$resource('/reviews').save({}, this.reviews)

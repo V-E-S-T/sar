@@ -24,6 +24,10 @@ public class ProductController {
     public Product getProduct(@PathVariable("product_id") Product product){
         return product;
     }
+    @GetMapping("/getProductByAsin/{asin}")
+    public Product getProductByAsin(@PathVariable("asin") String asin){
+        return productService.findByAsin(asin);
+    }
 
     @PostMapping
     public Product create(@RequestBody String asin){
