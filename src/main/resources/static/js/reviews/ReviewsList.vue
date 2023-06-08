@@ -3,12 +3,13 @@
 
     <v-layout row>
       <v-flex grow pa-1 lg10 md10 xs8>
-        <v-layout align-space-around justify-start column>
-          <review-row v-for="review in reviews"
-                      :key="review.review_id"
-                      :review="review"
-                      :reviews="reviews"/>
-        </v-layout>
+<!--        <v-layout align-space-around justify-start column>-->
+<!--          <review-row v-for="review in reviews"-->
+<!--                      :key="review.review_id"-->
+<!--                      :review="review"-->
+<!--                      :reviews="reviews"/>-->
+<!--        </v-layout>-->
+        <reviews-table :reviews="reviews"/>
       </v-flex>
       <v-flex shrink pa-1 class="parse-reviews-container">
         <v-card>
@@ -34,10 +35,12 @@
 // import MessageRow from 'components/messages/MessageRow.vue'
 // import MessageForm from 'components/messages/MessageForm.vue'
 import ReviewRow from "./ReviewRow.vue";
+import ReviewsTable from "./ReviewsTable.vue";
 
 export default {
   // props: ['messages'],
   components: {
+    ReviewsTable,
     ReviewRow
   },
   data() {
@@ -45,7 +48,7 @@ export default {
       review: null,
       // reviews: [[${reviewsData}]],
       // reviews: reviewsData,
-      reviews: '',
+      reviews: [],
       profile: frontendData.profile
     }
   },

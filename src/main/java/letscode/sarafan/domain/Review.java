@@ -1,5 +1,6 @@
 package letscode.sarafan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Review {
     private String reviewTitle;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     public Product getProduct() {
