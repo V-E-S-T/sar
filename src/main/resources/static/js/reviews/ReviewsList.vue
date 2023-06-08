@@ -1,9 +1,7 @@
 <template>
   <v-container fluid v-if="profile">
-
     <v-layout align-space-around >
       <v-card :product="product" class="mx-auto my-12" max-width="800">
-
         <v-card-title>
           <div>
             <p>Product with ASIN:  {{product.asin}}</p>
@@ -16,7 +14,6 @@
           </div>
         </v-card-title>
         <v-divider class="mx-4 mb-1"></v-divider>
-
         <v-card-text>
           <div class="text-xs-center">
             <v-rating
@@ -29,26 +26,12 @@
             ></v-rating>
             <div class="text-grey ms-4">{{product.rating}}</div>
           </div>
-
-<!--          <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>-->
-
-<!--          <div>-->
-<!--            {{product.description}}-->
-<!--          </div>-->
         </v-card-text>
-
         <v-divider class="mx-4 mb-1"></v-divider>
-
       </v-card>
     </v-layout>
     <v-layout row>
       <v-flex grow pa-1 lg10 md10 xs8>
-<!--        <v-layout align-space-around justify-start column>-->
-<!--          <review-row v-for="review in reviews"-->
-<!--                      :key="review.review_id"-->
-<!--                      :review="review"-->
-<!--                      :reviews="reviews"/>-->
-<!--        </v-layout>-->
         <reviews-table :reviews="reviews"/>
       </v-flex>
       <v-flex shrink pa-1 class="parse-reviews-container">
@@ -72,22 +55,16 @@
 </template>
 
 <script>
-// import MessageRow from 'components/messages/MessageRow.vue'
-// import MessageForm from 'components/messages/MessageForm.vue'
-import ReviewRow from "./ReviewRow.vue";
+
 import ReviewsTable from "./ReviewsTable.vue";
 
 export default {
-  // props: ['messages'],
   components: {
-    ReviewsTable,
-    ReviewRow
+    ReviewsTable
   },
   data() {
     return {
       review: null,
-      // reviews: [[${reviewsData}]],
-      // reviews: reviewsData,
       reviews: [],
       profile: frontendData.profile,
       product: ""
@@ -96,12 +73,6 @@ export default {
   created() {
     this.getData()
   },
-  // computed: {
-  //   cols () {
-  //     const { lg, sm } = this.$vuetify.display
-  //     return lg ? [3, 9] : sm ? [9, 3] : [6, 6]
-  //   },
-  // },
   methods: {
     getData(){
       this.$resource('/reviews/getSavedReviews{/asin}').get({asin: this.$route.params.asin})
@@ -115,16 +86,6 @@ export default {
                 this.$data.product = data
               }))
     },
-    // fetchData() {
-    //   this.$resource('/reviews{/asin}').get({asin: this.$route.params.asin})
-    //       .then(result =>
-    //           result.json().then(data => {
-    //             this.$data.reviews = data
-    //           }))
-    //   if (this.$data.reviews.size === 0) {
-    //     alert('There is no any product reviews for this ASIN')
-    //   }
-    // },
     parseReviews() {
       this.$resource('/reviews/parseReviews{/asin}').get({asin: this.$route.params.asin})
           .then(result =>
@@ -136,9 +97,6 @@ export default {
       }
     },
     saveReviews() {
-      // const existingProduct = this.products.find(
-      //     product => product.asin === this.asin);
-
       if (this.reviews.length === 0) {
         alert('There is no any Reviews to save.')
       } else {
@@ -159,29 +117,6 @@ export default {
       }
     }
   }
-
-  // computed: {
-  //   sortedProducts() {
-  //     return (this.products || []).sort((a, b) => -(a.id - b.id))
-  //   }
-  // },
-  // methods: {
-  //   update: function (product) {
-  //     this.product = product;
-  //   }
-  // }
-  // methods: {
-  //   editMessage(message) {
-  //     this.message = message
-  //   },
-  //   deleteMessage(message) {
-  //     this.$resource('/message{/id}').remove({id: message.id}).then(result => {
-  //       if (result.ok) {
-  //         this.messages.splice(this.messages.indexOf(message), 1)
-  //       }
-  //     })
-  //   }
-  // }
 }
 </script>
 

@@ -1,4 +1,3 @@
-// import {createApp} from 'vue'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import App from 'pages/App.vue'
@@ -13,14 +12,3 @@ new Vue({
     router,
     render: a => a(App)
 })
-
-
-
-// let app;
-// app = Vue.createApp({
-//     el: '#app',
-//     render: a => a(App),
-//     // vuetify: new Vuetify({})
-// });
-// app.use(VueResource)
-// app.use(Vuetify)

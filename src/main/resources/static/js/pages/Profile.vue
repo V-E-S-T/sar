@@ -4,9 +4,6 @@
       <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
         <div class="title mb-3">User profile</div>
         <v-layout row justify-space-between>
-<!--          <v-flex class="px-1">-->
-<!--            <v-img :src="profile.userpic"></v-img>-->
-<!--          </v-flex>-->
           <v-flex class="px-1">
             <v-layout column>
               <v-flex>{{profile.name}}</v-flex>
@@ -23,7 +20,6 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
 export default {
   data() {
     return {

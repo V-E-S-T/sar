@@ -1,19 +1,12 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-title>Amazon Review Parser</v-toolbar-title>
+      <v-toolbar-title>Amazon Parser</v-toolbar-title>
       <v-btn flat
              v-if="profile"
              :disabled="$route.path === '/'"
-             @click="showMessages">
+             @click="showProducts">
         Products
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn flat
-             v-if="profile"
-             :disabled="$route.path === '/reviews'"
-             @click="showReviews">
-        Reviews
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn flat
@@ -27,27 +20,18 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-<!--      <v-container v-if="!profile">-->
-<!--        Необходимо авторизоваться через-->
-<!--        <a href="/login">Google</a>-->
-<!--      </v-container>-->
-<!--      <v-container v-if="profile">-->
-<!--        <messages-list :messages="messages" />-->
-<!--      </v-container>-->
       <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import MessagesList from 'components/messages/MessageList.vue'
-import ProductTable from 'products/ProductTable.vue'
+import MessagesList from '../components/messages/MessageList.vue'
 import ReviewsList from "../reviews/ReviewsList.vue";
 
 export default {
   components: {
     MessagesList,
-    ProductTable,
     ReviewsList
   },
   data() {
@@ -58,14 +42,11 @@ export default {
     }
   },
   methods: {
-    showMessages() {
+    showProducts() {
       this.$router.push('/')
     },
     showProfile() {
       this.$router.push('/profile')
-    },
-    showReviews() {
-      this.$router.push('/reviews')
     }
   },
   beforeMount() {
