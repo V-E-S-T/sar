@@ -9,8 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.function.Supplier;
 
 @Configuration
 @EnableWebSecurity
@@ -30,25 +33,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PrincipalExtractor principalExtractor(UserDetailsRepo userDetailsRepo) {
-        return map -> {
-            String id = (String) map.get("sub");
+        return new PrincipalExtractor() {
+            @Override
+            public Object extractPrincipal(Map<String, Object> map) {
+                String id = (String) map.get("sub");
 
-            User user = userDetailsRepo.findById(id).orElseGet(() -> {
-                User newUser = new User();
+                User user = userDetailsRepo.findById(id).orElseGet(new Supplier<User>() {
+                    @Override
+                    public User get() {
+                        User newUser = new User();
 
-                newUser.setId(id);
-                newUser.setName((String) map.get("name"));
-                newUser.setEmail((String) map.get("email"));
-                newUser.setGender((String) map.get("gender"));
-                newUser.setLocale((String) map.get("locale"));
-                newUser.setUserpic((String) map.get("picture"));
+                        newUser.setId(id);
+                        newUser.setName((String) map.get("name"));
+                        newUser.setEmail((String) map.get("email"));
+                        newUser.setGender((String) map.get("gender"));
+                        newUser.setLocale((String) map.get("locale"));
+                        newUser.setUserpic((String) map.get("picture"));
 
-                return newUser;
-            });
+                        return newUser;
+                    }
+                });
 
-            user.setLastVisit(LocalDateTime.now());
+                user.setLastVisit(LocalDateTime.now());
 
-            return userDetailsRepo.save(user);
+                return userDetailsRepo.save(user);
+            }
         };
     }
+
 }

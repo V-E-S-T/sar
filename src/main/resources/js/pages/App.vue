@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import ProductList from '../components/products/ProductList.vue'
+import ProductList from '../products/ProductList.vue'
 import ReviewsList from "../reviews/ReviewsList.vue";
 
 export default {

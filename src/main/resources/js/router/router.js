@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
-import ProductList from '../components/products/ProductList.vue'
+import ProductList from '../products/ProductList.vue'
 import Auth from '../pages/Auth.vue'
 import Profile from '../pages/Profile.vue'
 import ReviewsList from '../reviews/ReviewsList.vue'
